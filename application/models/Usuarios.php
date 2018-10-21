@@ -59,14 +59,14 @@ class Usuarios extends CI_Model{
 
         else if ( $tipo == 'Administrativo'){ //verificar usuario, pass y de perfil, si existe devolver modulos asignados
            
-            $query = $this->db->query("
+      /*       $query = $this->db->query("
             SELECT id_usuario FROM usuario  
             WHERE user_name= '".strtoupper($user)."'
             ");
             $info = $query->result_array();
 
             $pass= md5($pass.strtoupper($user).$info[0]['id_usuario']);
-       
+        */
             $query = $this->db->query("
                 SELECT u.user_name as nombre, u.pass, u.id_usuario as id FROM usuario as u
                 INNER JOIN usuario_perfil p on (u.id_usuario = p.id_usuario)
@@ -91,14 +91,13 @@ class Usuarios extends CI_Model{
 
     	else if( $tipo == 'Administrador'){ //verificar usuario, pass y de perfil, si existe devolver modulos asignados
             
-                
-
             $query = $this->db->query("
-            Select id_usuario as id FROM usuario  
-            WHERE user_name= '".$user."'
+            SELECT id_usuario FROM usuario  
+            WHERE user_name= '".strtoupper($user)."'
             ");
-            $id_usuario = $query->result_array();
-            $pass=md5($pass || $user || $id_usuario[0]['id']);
+            $info = $query->result_array();
+
+            $pass= md5($pass.strtoupper($user).$info[0]['id_usuario']);
       
       $query = $this->db->query("
       SELECT u.user_name as nombre, u.pass, u.id_usuario as id FROM usuario as u
