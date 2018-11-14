@@ -48,7 +48,7 @@ class Usuarios extends CI_Model{
 
             $data = $query->result_array();
 
-            if(count($data) == 1){
+/*             if(count($data) == 1){
                 $array_out = array("return"=>"success","id"=>$data[0]['id'],"user"=>$data[0]['nombre']);
                 $query = $this->db->query("
                     SELECT id_mod as modulos FROM public.perfil_modulo
@@ -56,6 +56,16 @@ class Usuarios extends CI_Model{
                 ");
                 $array_out['modulos'] = $query->result_array();
             }
+ */
+            if(count($data) == 1){
+                $array_out = array("return"=>"success","id"=>$data[0]['id'],"user"=>$data[0]['nombre']);
+                $query = $this->db->query("
+                    SELECT id_mod as modulos FROM public.usuario_modulo
+                    WHERE id_usuario = ".$data[0]['id']." ORDER BY id_mod;
+                ");
+                $array_out['modulos'] = $query->result_array();
+            }
+
             else{
                 $array_out = array("return"=>"failure");
             }
@@ -84,14 +94,24 @@ class Usuarios extends CI_Model{
 
     		$data = $query->result_array();
 
-    		if(count($data) == 1){
+    /* 		if(count($data) == 1){
     			$array_out = array("return"=>"success","id"=>$data[0]['id'],"user"=>$data[0]['nombre']);
                 $query = $this->db->query("
                     SELECT id_mod as modulos FROM public.perfil_modulo
                     WHERE id_perfil = 3 ORDER BY id_mod;
                 ");
                 $array_out['modulos'] = $query->result_array();
-    		}
+            }
+             */
+            if(count($data) == 1){
+                $array_out = array("return"=>"success","id"=>$data[0]['id'],"user"=>$data[0]['nombre']);
+                $query = $this->db->query("
+                    SELECT id_mod as modulos FROM public.usuario_modulo
+                    WHERE id_usuario = ".$data[0]['id']." ORDER BY id_mod;
+                ");
+                $array_out['modulos'] = $query->result_array();
+            }
+
     		else{
     			$array_out = array("return"=>"failure");
     		}
