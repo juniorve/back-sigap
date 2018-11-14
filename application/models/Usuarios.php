@@ -33,11 +33,18 @@ class Usuarios extends CI_Model{
             $info = $query->result_array();
             $pass= md5($pass.strtoupper($user).$info[0]['id_usuario']);
        
-            $query = $this->db->query("
+/*             $query = $this->db->query("
                 SELECT nom_alumno as nombre , cod_alumno as id FROM public.alumno_programa
                 WHERE  cod_alumno = '".$pass."' AND lower(correo) = '".$user."'
                 "
             );
+ */
+            $query = $this->db->query("
+            SELECT u.user_name as nombre, u.pass, u.id_usuario as id FROM usuario as u
+            INNER JOIN usuario_perfil p on (u.id_usuario = p.id_usuario)
+            INNER JOIN perfil i on (i.id_perfil = p.id_perfil)
+            WHERE i.id_perfil = 2 AND lower(u.user_name) = '".$user."' AND u.pass = '".$pass."'"
+        );
 
             $data = $query->result_array();
 
@@ -63,10 +70,17 @@ class Usuarios extends CI_Model{
             $info = $query->result_array();
             $pass= md5($pass.strtoupper($user).$info[0]['id_usuario']);
        
-            $query = $this->db->query("
+          /*   $query = $this->db->query("
     			SELECT nombres as nombre, id FROM public.docente
     			WHERE  (codigo = '".$pass."' OR nro_document = '".$pass."') AND lower(email) = '".$user."'"
             );
+         */
+            $query = $this->db->query("
+            SELECT u.user_name as nombre, u.pass, u.id_usuario as id FROM usuario as u
+            INNER JOIN usuario_perfil p on (u.id_usuario = p.id_usuario)
+            INNER JOIN perfil i on (i.id_perfil = p.id_perfil)
+            WHERE i.id_perfil = 2 AND lower(u.user_name) = '".$user."' AND u.pass = '".$pass."'"
+        );
 
     		$data = $query->result_array();
 
