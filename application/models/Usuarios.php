@@ -26,7 +26,14 @@ class Usuarios extends CI_Model{
     public function loggin ($user,$pass,$tipo){
 
     	if($tipo == 'Alumno'){  // verificar usuario y pass, si existe devolver modulos asignados
-    		$query = $this->db->query("
+            $query = $this->db->query("
+            SELECT id_usuario FROM usuario  
+            WHERE user_name= '".strtoupper($user)."'
+            ");
+            $info = $query->result_array();
+            $pass= md5($pass.strtoupper($user).$info[0]['id_usuario']);
+       
+            $query = $this->db->query("
                 SELECT nom_alumno as nombre , cod_alumno as id FROM public.alumno_programa
                 WHERE  cod_alumno = '".$pass."' AND lower(correo) = '".$user."'
                 "
@@ -49,7 +56,14 @@ class Usuarios extends CI_Model{
 
     	}
     	else if( $tipo == 'Docente'){ // verificar usuario y pass, si existe devolver modulos asignados
-    		$query = $this->db->query("
+            $query = $this->db->query("
+            SELECT id_usuario FROM usuario  
+            WHERE user_name= '".strtoupper($user)."'
+            ");
+            $info = $query->result_array();
+            $pass= md5($pass.strtoupper($user).$info[0]['id_usuario']);
+       
+            $query = $this->db->query("
     			SELECT nombres as nombre, id FROM public.docente
     			WHERE  (codigo = '".$pass."' OR nro_document = '".$pass."') AND lower(email) = '".$user."'"
             );
@@ -77,7 +91,6 @@ class Usuarios extends CI_Model{
             WHERE user_name= '".strtoupper($user)."'
             ");
             $info = $query->result_array();
-
             $pass= md5($pass.strtoupper($user).$info[0]['id_usuario']);
        
             $query = $this->db->query("
@@ -109,7 +122,6 @@ class Usuarios extends CI_Model{
             WHERE user_name= '".strtoupper($user)."'
             ");
             $info = $query->result_array();
-
             $pass= md5($pass.strtoupper($user).$info[0]['id_usuario']);
        
       
