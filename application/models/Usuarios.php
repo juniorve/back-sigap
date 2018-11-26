@@ -65,12 +65,9 @@ class Usuarios extends CI_Model{
                 ");
                 $array_out['modulos'] = $query->result_array();
             }
-
             else{
                 $array_out = array("return"=>"failure");
             }
-
-
     	}
     	else if( $tipo == 'Docente'){ // verificar usuario y pass, si existe devolver modulos asignados
             $query = $this->db->query("
